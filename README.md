@@ -1,1 +1,1 @@
-# mindset-website
+Mindset Guild Website
