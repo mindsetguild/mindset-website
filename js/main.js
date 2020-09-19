@@ -1,8 +1,5 @@
-// set the date and 
-var countDownDate = new Date("Oct 23, 2020 18:00:00").getTime();
-var firstTransition = true;
-var forceCountdown = false;
-
+// true if countdown was forced
+let forceCountdown = false;
 // display elements
 setTimeout(function () {
   $('.center-panel').removeClass('hide');
@@ -15,52 +12,61 @@ setTimeout(function () {
   if (!forceCountdown) {
     startCountdown();
   }
-}, 3000);
-
-// adds zero if number if less than ten
-function checkNumber(number) {
-  return number < 10 ? '0' + number : number;
-}
+}, 2000);
 
 // start opening party countdown
 function startCountdown() {
-  var counter = setInterval(function () {
+  // set the date and 
+  let countdownDate = new Date('Oct 23, 2020 18:00:00').getTime();
+  let firstTransition = true;
+
+  // updating time every second
+  let counter = setInterval(function () {
 
     // current date
-    var now = new Date().getTime();
+    let now = new Date().getTime();
 
-    // find distance
-    var distance = countDownDate - now;
-
-    // calculate date and time
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // object with countdown difference data
+    let countdownData = calculateCountdown(countdownDate - now);
 
     // do transition if its first interval
     if (firstTransition) {
-      var elem = $('.countdown-panel').get(0);
+      let countdown = $('.countdown-panel').get(0);
       setInterval(change, 500);
 
       function change() {
-        $(elem).addClass('hide');
+        $(countdown).addClass('hide');
         setTimeout(function () {
-          $(elem).removeClass('hide');
+          $(countdown).removeClass('hide');
           $('.blurred-container').removeClass('hide');
         }, 500);
       }
       firstTransition = false;
     }
-    else if (!firstTransition) {
+    else {
       // display countdown for current interval
-      $('.countdown-panel').text(checkNumber(days) + ' : ' + checkNumber(hours) + ' : ' + checkNumber(minutes) + ' : ' + checkNumber(seconds));
+      $('.countdown-panel').text(updateFormat(countdownData.days) + ' : ' + updateFormat(countdownData.hours) + ' : ' + updateFormat(countdownData.minutes) + ' : ' + updateFormat(countdownData.seconds));
     }
 
     // if the count down is finished write coming soon
-    if (distance < 0) {
+    if (difference < 0) {
       clearInterval(counter);
       $('.countdown-panel').text('COMING SOON');
     }
   }, 1000);
+}
+
+// adds zero if number if less than ten
+function updateFormat(number) {
+  return number < 10 ? '0' + number : number;
+}
+
+// calculate date and time
+function calculateCountdown(difference) {
+  return {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((difference % (1000 * 60)) / 1000)
+  }
 }
