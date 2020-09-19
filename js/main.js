@@ -39,14 +39,14 @@ function startCountdown() {
         $(countdown).addClass('hide');
         setTimeout(function () {
           $(countdown).removeClass('hide');
-          $('.blurred-container').removeClass('hide');
+          $('.blurred-logo-text').removeClass('hide');
         }, 500);
       }
       firstTransition = false;
     }
     else {
       // display countdown for current interval
-      $('.countdown-panel').text(updateFormat(countdownData.days) + ' : ' + updateFormat(countdownData.hours) + ' : ' + updateFormat(countdownData.minutes) + ' : ' + updateFormat(countdownData.seconds));
+      $('.countdown-panel').text(countdownData.days + ' : ' + countdownData.hours + ' : ' + countdownData.minutes + ' : ' + countdownData.seconds);
     }
 
     // if the count down is finished write coming soon
@@ -65,9 +65,9 @@ function updateFormat(number) {
 // calculate date and time
 function calculateCountdown(difference) {
   return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-    seconds: Math.floor((difference % (1000 * 60)) / 1000)
+    days: updateFormat(Math.floor(difference / (1000 * 60 * 60 * 24))),
+    hours: updateFormat(Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))),
+    minutes: updateFormat(Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))),
+    seconds: updateFormat(Math.floor((difference % (1000 * 60)) / 1000))
   }
 }
