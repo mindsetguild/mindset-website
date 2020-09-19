@@ -28,16 +28,13 @@
 }
 
 .countdown-font {
+	opacity: 1;
+    transition: opacity 0.5s;
 	font-family: mindset-font;
 	font-size: 650%;
 	background: -webkit-linear-gradient(133deg, rgba(255,220,170,1) 0%, rgba(201,170,255,1) 100%);
 	-webkit-background-clip: text;
   	-webkit-text-fill-color: transparent;
-}
-
-.countdown-text {
-	opacity: 1;
-    transition: opacity 0.5s;
 }
 
 .blurred-logo-text {
@@ -55,6 +52,10 @@
 
 .hide {
     opacity: 0 !important;
+}
+
+.none {
+	display: none;
 }
 
 .black-background {
