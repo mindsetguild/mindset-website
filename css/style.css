@@ -35,6 +35,11 @@
   	-webkit-text-fill-color: transparent;
 }
 
+.countdown-text {
+	opacity: 1;
+    transition: opacity 0.5s;
+}
+
 .blurred-logo-text {
 	display: block;
 	opacity: 1;

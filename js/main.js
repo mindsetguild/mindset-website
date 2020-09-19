@@ -1,18 +1,42 @@
 // true if countdown was forced
 let forceCountdown = false;
+
+// start countdown if not already forced
+let countdownTimer = setTimeout(function () {
+  if (!forceCountdown) {
+    startCountdown();
+  }
+}, 3000);
+
 // display elements
 setTimeout(function () {
   $('.center-panel').removeClass('hide');
   $('.bottom-panel').removeClass('hide');
-  $('.countdown-panel').removeClass('hide').text('MINDSET');
+  $('.countdown-panel').append('<p class="countdown-text countdown-font align-center">MINDSET</p>').removeClass('hide');
+
+  setTimeout(function () {
+    textTransition($('.countdown-text'), 'COMING SOON');
+  }, 1500);
+
+  /*
+  $('.countdown-panel').on('mouseover', function() {
+    startCountdown();
+    clearInterval(countdownTimer);
+    forceCountdown = true;
+  });
+  */
 }, 500);
 
-// start countdown if not already forced
-setTimeout(function () {
-  if (!forceCountdown) {
-    startCountdown();
-  }
-}, 2000);
+// create half second text transition to new text
+function textTransition(element, text) {
+  element.addClass('hide');
+  setTimeout(function () {
+    element.removeClass('hide');
+  }, 500);
+  setTimeout(function () {
+    element.text(text);
+  }, 500);
+}
 
 // start opening party countdown
 function startCountdown() {
@@ -46,13 +70,13 @@ function startCountdown() {
     }
     else {
       // display countdown for current interval
-      $('.countdown-panel').text(countdownData.days + ' : ' + countdownData.hours + ' : ' + countdownData.minutes + ' : ' + countdownData.seconds);
+      $('.countdown-text').text(countdownData.days + ' : ' + countdownData.hours + ' : ' + countdownData.minutes + ' : ' + countdownData.seconds);
     }
 
     // if the count down is finished write coming soon
     if (difference < 0) {
       clearInterval(counter);
-      $('.countdown-panel').text('COMING SOON');
+      $('.countdown-text').text('COMING SOON');
     }
   }, 1000);
 }
