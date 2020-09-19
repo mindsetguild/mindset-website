@@ -25,9 +25,10 @@ function startCountdown() {
 
     // current date
     let now = new Date().getTime();
-
+    // date difference
+    let difference = countdownDate - now;
     // object with countdown difference data
-    let countdownData = calculateCountdown(countdownDate - now);
+    let countdownData = calculateCountdown(difference);
 
     // do transition if its first interval
     if (firstTransition) {
