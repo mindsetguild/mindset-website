@@ -109,10 +109,10 @@ function getCountdown(countdownData) {
 $(document).ready(function () {
   // document is not loaded
   let isLoaded = false;
-  // interval for checking if document is fully loaded
+  // interval for checking if document is hidden
   let documentFocusInterval = setInterval(function () {
-    //console.log(interval % (transitionTimer * 2));
-    if (document.hasFocus()) {
+    // document is not hidden
+    if (!document.hidden) {
       // display elements only on initial load
       if (!isLoaded) {
         // display logo
