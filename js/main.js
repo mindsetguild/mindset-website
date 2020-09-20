@@ -1,17 +1,16 @@
-// countdown is active
-let stopCountdown = false;
-// create half second text transition to new text
-function textTransition(element, text) {
-  element.addClass('hide');
-  setTimeout(function () {
-    element.removeClass('hide');
-  }, 500);
-  setTimeout(function () {
-    element.text(text);
-  }, 500);
-}
+/**
+ * Target date for countdown
+ */
+const targetDate = 'Oct 23, 2020 18:00:00';
 
-// start opening party countdown
+/**
+ * Transition timer in seconds
+ */
+const transitionTimer = 18;
+
+/**
+ * Start countdown timer
+ */
 function startCountdown() {
   // set the date and 
   let countdownDate = new Date('Oct 23, 2020 18:00:00').getTime();
@@ -55,17 +54,38 @@ function startCountdown() {
     }
     else {
       firstTransition = true;
-      //clearInterval(counter);
+      clearInterval(counter);
     }
   }, 1000);
 }
 
-// adds zero if number if less than ten
+/**
+ * Create half second transition to new text
+ * @param {Element} element 
+ * @param {String} text 
+ */
+function textTransition(element, text) {
+  element.addClass('hide');
+  setTimeout(function () {
+    element.removeClass('hide');
+  }, 500);
+  setTimeout(function () {
+    element.text(text);
+  }, 500);
+}
+
+/**
+ * Returns string with number in two digit format
+ * @param {*} number 
+ */
 function updateFormat(number) {
   return number < 10 ? '0' + number : number;
 }
 
-// calculate date and time
+/**
+ * Returns object with calculated time values
+ * @param {Date} difference 
+ */
 function calculateCountdown(difference) {
   return {
     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -75,66 +95,91 @@ function calculateCountdown(difference) {
   }
 }
 
+/**
+ * Returns text in countdown format
+ * @param {Object} countdownData 
+ */
+function getCountdown(countdownData) {
+  return countdownData.days + ' : ' + countdownData.hours + ' : ' + countdownData.minutes + ' : ' + countdownData.seconds;
+}
 
+/**
+ * Document ready function
+ */
 $(document).ready(function () {
-
-  // transition timer in seconds
-  const transitionTimer = 12;
-
-  let interval = 0;
-  let documentFocus = setInterval(function () {
-
+  // document is not loaded
+  let isLoaded = false;
+  // interval for checking if document is fully loaded
+  let documentFocusInterval = setInterval(function () {
     //console.log(interval % (transitionTimer * 2));
     if (document.hasFocus()) {
-      interval++;
       // display elements only on initial load
-      if (interval == 1) {
+      if (!isLoaded) {
+        // display logo
         $('.center-panel').removeClass('hide');
+        // display social media icons
         $('.bottom-panel').removeClass('hide');
-        $('.countdown-panel').append('<p class="js-countdown-text countdown-font align-center">MINDSET</p>').removeClass('hide');
+        // countdown panel element
+        let countdownPanel = $('.countdown-panel');
+        // append and show countdown element
+        countdownPanel.append('<p class="js-countdown-text countdown-font align-center">MINDSET</p>').removeClass('hide');
+        // document is loaded
+        isLoaded = true;
 
-        setTimeout(function () {
-          textTransition($('.js-countdown-text'), 'COMING SOON');
-        }, 1500);
+        // counter for timing transitions
+        let interval = 0;
+        // interval for countdown transitions
+        setInterval(function () {
+          // set target date and time
+          let countdownDate = new Date(targetDate).getTime();
+          // current date
+          let now = new Date().getTime();
+          // date difference
+          let difference = countdownDate - now;
+          // object with countdown difference data
+          let countdownData = calculateCountdown(difference);
+          // countdown text element
+          let countdownText = $('.js-countdown-text');
 
-        // true if countdown was forced
-        let forceCountdown = false;
-
-        // start countdown if not already forced
-        let countdownTimer = setTimeout(function () {
-          if (!forceCountdown) {
-            startCountdown();
+          // switch for timing transitions
+          switch (interval % transitionTimer) {
+            case 2:
+              countdownPanel.addClass('hide');
+              break;
+            case 3:
+              countdownPanel.removeClass('hide');
+              countdownText.text('COMING SOON');
+              break;
+            case 5:
+              countdownPanel.addClass('hide');
+              break;
+            case 6:
+              countdownPanel.removeClass('hide');
+              countdownText.text(getCountdown(countdownData));
+              // show blurred text if it is hidden
+              if ($('.blurred-logo-text').hasClass('hide')) {
+                $('.blurred-logo-text').removeClass('hide');
+              }
           }
-        }, 1500);
 
-      } else if (interval > (transitionTimer * 2)) {
-        // switch for loop timing
-        switch (interval % (transitionTimer * 2)) {
-          case 1:
-            $('.countdown-panel').addClass('hide');
-            stopCountdown = true;
-            break;
-          case 2:
-            $('.countdown-panel').removeClass('hide');
-            $('.js-countdown-text').text('MINDSET');
-            break;
-          case 8:
-            $('.countdown-panel').addClass('hide');
-            break;
-          case 9:
-            $('.countdown-panel').removeClass('hide');
-            $('.js-countdown-text').text('COMING SOON');
-            break;
-          case 13:
-            stopCountdown = false;
-            break;
-          case 15:
-            $('.countdown-panel').addClass('hide');
-            break;
-          case 16:
-            $('.countdown-panel').removeClass('hide');
-        }
+          // if timer with offset is higher than highest value in timer set text to current countdown
+          if ((interval % transitionTimer) > 6) {
+            countdownText.text(getCountdown(countdownData));
+          }
+          // reset to default position
+          else if (interval != 0 && interval % transitionTimer == 0) {
+            countdownText.text(getCountdown(countdownData));
+            interval = 1;
+          }
+          // iterate interval
+          interval++;
+        }, 1000);
+      }
+      // document is loaded
+      else {
+        // clear document focus interval
+        clearInterval(documentFocusInterval);
       }
     }
-  }, 500);
+  }, 1000);
 });
