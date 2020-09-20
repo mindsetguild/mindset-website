@@ -76,7 +76,7 @@ function textTransition(element, text) {
 
 /**
  * Returns string with number in two digit format
- * @param {*} number 
+ * @param {Number} number 
  */
 function updateFormat(number) {
   return number < 10 ? '0' + number : number;
