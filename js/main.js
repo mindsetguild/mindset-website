@@ -113,16 +113,15 @@ $(document).ready(function () {
   let documentFocusInterval = setInterval(function () {
     // document is not hidden
     if (!document.hidden) {
-      // display elements only on initial load
+      // display page content only on initial load
       if (!isLoaded) {
-        // display logo
-        $('.center-panel').removeClass('hide');
-        // display social media icons
-        $('.bottom-panel').removeClass('hide');
+        // show page content
+        $('.content').removeClass('hide');
         // countdown panel element
         let countdownPanel = $('.countdown-panel');
         // append and show countdown element
-        countdownPanel.append('<p class="js-countdown-text countdown-font align-center">MINDSET</p>').removeClass('hide');
+        countdownPanel.append('<p class="js-countdown-text countdown-font align-center">MINDSET</p>');
+
         // document is loaded
         isLoaded = true;
 

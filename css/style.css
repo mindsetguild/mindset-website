@@ -28,8 +28,6 @@
 }
 
 .countdown-font {
-	opacity: 1;
-    transition: opacity 0.5s;
 	font-family: mindset-font;
 	font-size: 650%;
 	background: -webkit-linear-gradient(133deg, rgba(255,220,170,1) 0%, rgba(201,170,255,1) 100%);
@@ -39,15 +37,11 @@
 
 .blurred-logo-text {
 	display: block;
-	opacity: 1;
-	transition: opacity 0.5s;
 }
 
 .blurred-container {
 	position: absolute;
 	left: 50%;
-	opacity: 1;
-    transition: opacity 0.5s;
 }
 
 .hide {
@@ -82,14 +76,13 @@
 	transform: scale(1.25);
 }
 
-/*
+
 .video-background {
 	position: absolute;
-	bottom: 0;
+	top: 0;
 	left: 0;
 	width: 100%;
 }
-*/
 
 .center {
 	width: 50%;
@@ -106,6 +99,11 @@
 }
 */
 
+.transition {
+	opacity: 1;
+	transition: opacity 0.5s;
+}
+
 .content {
 	margin: auto;
 	height: 100%;
@@ -120,21 +118,15 @@
 .countdown-panel {
 	margin-top: 4%;
 	margin-bottom: 4%;
-	opacity: 1;
-    transition: opacity 0.5s;
 }
 
 .center-panel {
 	margin-top: 6%;
 	margin-bottom: -10%;
-	opacity: 1;
-    transition: opacity 0.5s;
 }
 
 .bottom-panel {
 	margin-bottom: 100px;
-	opacity: 1;
-    transition: opacity 0.5s;
 }
 
 .align-center {
@@ -151,11 +143,11 @@ body {
 	margin-right: 0px;
 	margin-bottom: 0px;
 	background: linear-gradient(270deg, #121212, #1f103c);
-     background-size: 400% 400%;
-     -webkit-animation: mindset 8s ease infinite;
-     -moz-animation: mindset 8s ease infinite;
-     -o-animation: mindset 8s ease infinite;
-     animation: mindset 8s ease infinite;
+    background-size: 400% 400%;
+    -webkit-animation: mindset 8s ease infinite;
+    -moz-animation: mindset 8s ease infinite;
+    -o-animation: mindset 8s ease infinite;
+    animation: mindset 8s ease infinite;
  }
 
 a:link {
