@@ -1,7 +1,7 @@
 /**
  * Target date for countdown
  */
-const targetDate = 'Oct 23, 2020 18:00:00';
+const targetDate = 'Nov 23, 2020 00:00:00';
 
 /**
  * Transition timer in seconds
